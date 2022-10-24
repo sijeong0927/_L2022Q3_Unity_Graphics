@@ -7,25 +7,28 @@ Shader "My/SurfaceShader/UV_Flame2"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue" = "Transparent"} // <-- ¼öÁ¤
+        Tags { "RenderType"="Transparent" "Queue" = "Transparent"} // <-- ï¿½ï¿½ï¿½ï¿½
 
         CGPROGRAM
-        #pragma surface surf Standard fullforwardshadows alpha:fade // <-- ¼öÁ¤
+        #pragma surface surf Standard fullforwardshadows alpha:fade // <-- ï¿½ï¿½ï¿½ï¿½
 
         sampler2D _MainTex;
-        sampler2D _MainTex2; // <-- ¼öÁ¤
+        sampler2D _MainTex2; // <-- ï¿½ï¿½ï¿½ï¿½
 
         struct Input
         {
             float2 uv_MainTex;
-            float2 uv_MainTex2; // <-- ¼öÁ¤
+            float2 uv_MainTex2; // <-- ï¿½ï¿½ï¿½ï¿½
         };
 
         void surf (Input IN, inout SurfaceOutputStandard o)
-        {            
-            fixed4 d = tex2D (_MainTex2, float2(IN.uv_MainTex2.x, IN.uv_MainTex2.y - _Time.y)); // <-- ¼öÁ¤
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex + d.r);
-            o.Emission = c.rgb; // <-- ¼öÁ¤
+        {
+            //fixed4 c = tex2D (_MainTex, float2(IN.uv_MainTex.x, IN.uv_MainTex.y + _Time.y));
+            //fixed4 d = tex2D (_MainTex2, IN.uv_MainTex2 - c.r); // <-- ï¿½ï¿½ï¿½ï¿½
+            fixed4 d = tex2D (_MainTex2, float2(IN.uv_MainTex2.x, IN.uv_MainTex2.y - _Time.y));
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex + d.r - 0.1);
+            
+            o.Emission = c.rgb; // <-- ï¿½ï¿½ï¿½ï¿½
             o.Alpha = c.a;
         }
         ENDCG
